@@ -4,13 +4,13 @@ public class Country
 {
     // fields
     private String name;
-    private int population;
+    private long population;
     private int landMassKm2;
     private int medianAge;
 
     public Country(
         String name,
-        int population,
+        long population,
         int landMassKm2,
         int medianAge)
     {
@@ -30,7 +30,7 @@ public class Country
         this.name = name;
     }
 
-    public int getPopulation()
+    public long getPopulation()
     {
         return population;
     }
@@ -58,5 +58,16 @@ public class Country
     public void setMedianAge(int medianAge)
     {
         this.medianAge = medianAge;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Country{" +
+            "name='" + name + '\'' +
+            ", population=" + population +
+            ", landMassKm2=" + landMassKm2 +
+            ", medianAge=" + medianAge +
+            '}';
     }
 }
