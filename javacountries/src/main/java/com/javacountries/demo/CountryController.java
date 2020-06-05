@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -73,4 +74,21 @@ public class CountryController
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
+//    List<Long> population = new ArrayList<>();
+
+    // http://localhost:8080/population/min
+    @GetMapping(value = "/population/min",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountryByMinPopulation()
+    {
+
+        JavaCountriesApplication.ourCountryList.countryList
+            .sort((c1, c2) -> (int)
+                (c1.getPopulation() - c2.getPopulation()));
+//        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
+        return new ResponseEntity<>
+            (JavaCountriesApplication.ourCountryList.countryList.get(0),
+                HttpStatus.OK);
+    }
+
 }
