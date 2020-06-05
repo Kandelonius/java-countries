@@ -13,7 +13,7 @@ import java.util.List;
 public class CountryController
 {
 
-    // http://localhost:8080
+    // http://localhost:8080/names/all
     @GetMapping(value = "/names/all",
         produces = {"application/json"})
     public ResponseEntity<?> getAllCountries()
@@ -56,6 +56,20 @@ public class CountryController
             findCountries(c -> c.getName().length() >= number);
         rtnCounts.sort((c1, c2) ->
             (c1.getName().compareToIgnoreCase(c2.getName())));
+        return new ResponseEntity<>(rtnCounts,
+            HttpStatus.OK);
+    }
+    // http://localhost:8080/population/size/1000000000
+    @GetMapping(value = "/population/size/{people}",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByPopulation(
+        @PathVariable
+            int people)
+    {
+        List<Country> rtnCounts = JavaCountriesApplication.ourCountryList.
+            findCountries(c -> c.getPopulation() >= people);
+        rtnCounts.sort((c1, c2) -> (int)
+            (c1.getPopulation() - c2.getPopulation()));
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
