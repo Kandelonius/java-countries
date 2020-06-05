@@ -90,5 +90,19 @@ public class CountryController
             (JavaCountriesApplication.ourCountryList.countryList.get(0),
                 HttpStatus.OK);
     }
+    // http://localhost:8080/population/max
+    @GetMapping(value = "/population/max",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountryByMaxPopulation()
+    {
+
+        JavaCountriesApplication.ourCountryList.countryList
+            .sort((c1, c2) -> (int)
+                (c2.getPopulation() - c1.getPopulation()));
+        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
+        return new ResponseEntity<>
+            (JavaCountriesApplication.ourCountryList.countryList.get(0),
+                HttpStatus.OK);
+    }
 
 }
