@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -118,9 +119,36 @@ public class CountryController
     {
         List<Country> rtnCounts = JavaCountriesApplication.ourCountryList.
             findCountries(c -> c.getMedianAge() >= age);
-//        rtnCounts.sort((c1, c2) ->
-//            (c1.getMedianAge() - c2.getMedianAge()));
+        //        rtnCounts.sort((c1, c2) ->
+        //            (c1.getMedianAge() - c2.getMedianAge()));
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
+    }
+
+    // http://localhost:8080/age/min
+    @GetMapping(value = "/age/min",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountryByMinAge()
+    {
+        JavaCountriesApplication.ourCountryList.countryList
+            .sort(Comparator.comparingInt(Country::getMedianAge));
+        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
+        return new ResponseEntity<>
+            (JavaCountriesApplication.ourCountryList.countryList.get(0),
+                HttpStatus.OK);
+    }
+
+    // http://localhost:8080/age/max
+    @GetMapping(value = "/age/max",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountryByMaxAge()
+    {
+        JavaCountriesApplication.ourCountryList.countryList
+            .sort((c1, c2) ->
+                (c2.getMedianAge() - c1.getMedianAge()));
+        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
+        return new ResponseEntity<>
+            (JavaCountriesApplication.ourCountryList.countryList.get(0),
+                HttpStatus.OK);
     }
 }
