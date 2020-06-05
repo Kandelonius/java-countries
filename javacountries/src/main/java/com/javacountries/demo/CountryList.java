@@ -815,4 +815,28 @@ public class CountryList
             460,
             36));
     }
+    public Country findCountry(CheckCountry tester)
+    {
+        for (Country e : countryList)
+        {
+            if (tester.test(e))
+            {
+                return e;
+            }
+        }
+        return null;
+    }
+    public List<Country> findCountries(CheckCountry tester)
+    {
+        List<Country> tempCountList = new ArrayList<>();
+
+        for (Country c : countryList)
+        {
+            if (tester.test(c))
+            {
+                tempCountList.add(c);
+            }
+        }
+        return tempCountList;
+    }
 }
