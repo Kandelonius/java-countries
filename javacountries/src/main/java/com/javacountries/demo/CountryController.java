@@ -54,12 +54,15 @@ public class CountryController
             int number)
     {
         List<Country> rtnCounts = JavaCountriesApplication.ourCountryList.
-            findCountries(c -> c.getName().length() >= number);
+            findCountries(c -> c.getName()
+                .length() >= number);
         rtnCounts.sort((c1, c2) ->
-            (c1.getName().compareToIgnoreCase(c2.getName())));
+            (c1.getName()
+                .compareToIgnoreCase(c2.getName())));
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
+
     // http://localhost:8080/population/size/1000000000
     @GetMapping(value = "/population/size/{people}",
         produces = {"application/json"})
@@ -74,7 +77,7 @@ public class CountryController
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
-//    List<Long> population = new ArrayList<>();
+    //    List<Long> population = new ArrayList<>();
 
     // http://localhost:8080/population/min
     @GetMapping(value = "/population/min",
@@ -85,11 +88,12 @@ public class CountryController
         JavaCountriesApplication.ourCountryList.countryList
             .sort((c1, c2) -> (int)
                 (c1.getPopulation() - c2.getPopulation()));
-//        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
+        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
         return new ResponseEntity<>
             (JavaCountriesApplication.ourCountryList.countryList.get(0),
                 HttpStatus.OK);
     }
+
     // http://localhost:8080/population/max
     @GetMapping(value = "/population/max",
         produces = {"application/json"})
@@ -105,4 +109,18 @@ public class CountryController
                 HttpStatus.OK);
     }
 
+    // http://localhost:8080/age/age/25
+    @GetMapping(value = "/age/age/{age}",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByAge(
+        @PathVariable
+            int age)
+    {
+        List<Country> rtnCounts = JavaCountriesApplication.ourCountryList.
+            findCountries(c -> c.getMedianAge() >= age);
+//        rtnCounts.sort((c1, c2) ->
+//            (c1.getMedianAge() - c2.getMedianAge()));
+        return new ResponseEntity<>(rtnCounts,
+            HttpStatus.OK);
+    }
 }
