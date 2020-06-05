@@ -44,4 +44,19 @@ public class CountryController
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
+
+    // http://localhost:8080/names/size/20
+    @GetMapping(value = "/names/size/{number}",
+        produces = {"application/json"})
+    public ResponseEntity<?> getCountriesByNumber(
+        @PathVariable
+            int number)
+    {
+        List<Country> rtnCounts = JavaCountriesApplication.ourCountryList.
+            findCountries(c -> c.getName().length() >= number);
+        rtnCounts.sort((c1, c2) ->
+            (c1.getName().compareToIgnoreCase(c2.getName())));
+        return new ResponseEntity<>(rtnCounts,
+            HttpStatus.OK);
+    }
 }
