@@ -1,8 +1,15 @@
 package com.lambdashane.countriestwo.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "country")
 public class Country
 {
     // fields
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long countrid;
     private String name;
     private long population;
     private int landMassKm2;
