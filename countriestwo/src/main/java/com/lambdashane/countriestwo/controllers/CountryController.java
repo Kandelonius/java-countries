@@ -156,4 +156,18 @@ public class CountryController
                 .get(CountriestwoApplication.ourCountryList.countryList.size()/2 + 1),
                 HttpStatus.OK);
     }
+
+    //    http://localhost:2019/age/median
+    @GetMapping(value = "/age/median",
+        produces = {"application/json"})
+    public ResponseEntity<?> getAgeMedian()
+    {
+        CountriestwoApplication.ourCountryList.countryList
+            .sort(Comparator.comparingInt(Country::getMedianAge));
+        return new ResponseEntity<>
+            (CountriestwoApplication.ourCountryList.countryList
+                .get(CountriestwoApplication.ourCountryList.countryList.size()/2),
+                HttpStatus.OK);
+
+    }
 }
