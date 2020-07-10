@@ -10,9 +10,13 @@ public class Country
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long countrid;
+
     private String name;
+
     private long population;
+
     private int landMassKm2;
+
     private int medianAge;
 
     public Country(

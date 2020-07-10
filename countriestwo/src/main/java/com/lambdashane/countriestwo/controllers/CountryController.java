@@ -14,12 +14,12 @@ import java.util.List;
 @RestController
 public class CountryController
 {
-
     // http://localhost:8080/names/all
     @GetMapping(value = "/names/all",
         produces = {"application/json"})
     public ResponseEntity<?> getAllCountries()
     {
+        // sort a - z
         CountriestwoApplication.ourCountryList.countryList
             .sort((c1, c2) ->
                 (c1.getName()
@@ -78,18 +78,15 @@ public class CountryController
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
-    //    List<Long> population = new ArrayList<>();
 
     // http://localhost:8080/population/min
     @GetMapping(value = "/population/min",
         produces = {"application/json"})
     public ResponseEntity<?> getCountryByMinPopulation()
     {
-
         CountriestwoApplication.ourCountryList.countryList
             .sort((c1, c2) -> (int)
                 (c1.getPopulation() - c2.getPopulation()));
-        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
         return new ResponseEntity<>
             (CountriestwoApplication.ourCountryList.countryList.get(0),
                 HttpStatus.OK);
@@ -100,11 +97,9 @@ public class CountryController
         produces = {"application/json"})
     public ResponseEntity<?> getCountryByMaxPopulation()
     {
-
         CountriestwoApplication.ourCountryList.countryList
             .sort((c1, c2) -> (int)
                 (c2.getPopulation() - c1.getPopulation()));
-        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
         return new ResponseEntity<>
             (CountriestwoApplication.ourCountryList.countryList.get(0),
                 HttpStatus.OK);
@@ -119,8 +114,6 @@ public class CountryController
     {
         List<Country> rtnCounts = CountriestwoApplication.ourCountryList.
             findCountries(c -> c.getMedianAge() >= age);
-        //        rtnCounts.sort((c1, c2) ->
-        //            (c1.getMedianAge() - c2.getMedianAge()));
         return new ResponseEntity<>(rtnCounts,
             HttpStatus.OK);
     }
@@ -132,7 +125,6 @@ public class CountryController
     {
         CountriestwoApplication.ourCountryList.countryList
             .sort(Comparator.comparingInt(Country::getMedianAge));
-        //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
         return new ResponseEntity<>
             (CountriestwoApplication.ourCountryList.countryList.get(0),
                 HttpStatus.OK);
@@ -149,6 +141,19 @@ public class CountryController
         //        System.out.println(JavaCountriesApplication.ourCountryList.countryList);
         return new ResponseEntity<>
             (CountriestwoApplication.ourCountryList.countryList.get(0),
+                HttpStatus.OK);
+    }
+
+    //    http://localhost:2019/population/median
+    @GetMapping(value = "/population/median",
+        produces = {"application/json"})
+    public ResponseEntity<?> getPopulationMedian()
+    {
+        CountriestwoApplication.ourCountryList.countryList
+            .sort(Comparator.comparingLong(Country::getPopulation));
+        return new ResponseEntity<>
+            (CountriestwoApplication.ourCountryList.countryList
+                .get(CountriestwoApplication.ourCountryList.countryList.size()/2 + 1),
                 HttpStatus.OK);
     }
 }
